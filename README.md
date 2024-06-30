@@ -51,7 +51,7 @@ import 'package:flutter/material.dart';
     class RideService {
         List<Vehicle> _vehicles = [
             Vehicle(id: 'V1', type: 'Car', location: 'Location1'),
-            Vehicle(id: 'V2', type: 'Van', location: 'Location2'),
+            Vehicle(id: 'V2', type: 'Car2', location: 'Location2'),
             // Add more vehicles as needed
         ];
         List<RideRequest> _activeRides = [];
