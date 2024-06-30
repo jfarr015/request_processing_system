@@ -1,27 +1,21 @@
-// request_processing_system
-
-//A new Flutter project.
-
-//Getting Started
-
 import 'package:flutter/material.dart';
 
 // User Model
 class User {
-  final String id;
-  final String name;
-  final String phoneNumber;
+  final String id; // unique ID for the user
+  final String name; // name of the user
+  final String phoneNumber; // phone number of the user
 
   User({required this.id, required this.name, required this.phoneNumber});
 }
 
 // Ride Request Model
 class RideRequest {
-  final String id;
-  final User user;
-  final String pickupLocation;
-  final String dropoffLocation;
-  final DateTime requestTime;
+  final String id; // unique ID for the ride request
+  final User user; // the user who made the ride request.
+  final String pickupLocation; // the pickup location
+  final String dropoffLocation; // the dropoff location
+  final DateTime requestTime; // the time when the ride was requested
 
   RideRequest({
     required this.id,
@@ -34,10 +28,10 @@ class RideRequest {
 
 // Vehicle Model
 class Vehicle {
-  final String id;
-  final String type;
-  final String location;
-  bool isAvailable;
+  final String id; // unique ID for the vehicle
+  final String type; // type of the vehicle
+  String location; // current location of the vehicle
+  bool isAvailable; // availability of the vehicle
 
   Vehicle({
     required this.id,
@@ -50,30 +44,35 @@ class Vehicle {
 // Ride Service Class
 class RideService {
   List<Vehicle> _vehicles = [
-    Vehicle(id: 'V1', type: 'Car', location: 'TestLocation'),
-    Vehicle(id: 'V2', type: 'Van', location: 'Location2'),
-    // Add more vehicles as needed
+    Vehicle(id: 'V1', type: 'Car', location: ''),
+    Vehicle(id: 'V2', type: 'Car2', location: ''),
   ];
   List<RideRequest> _activeRides = [];
 
+  // returns the list of active ride requests
   List<RideRequest> getActiveRides() => _activeRides;
+
+  // returns the list of vehicles
   List<Vehicle> getVehicles() => _vehicles;
 
+  // processes a ride request by assigning an available vehicle and creates an exception if no vehicles are available
   void requestRide(RideRequest request) {
     print('Requesting ride for user: ${request.user.name}');
     try {
       final availableVehicle = _vehicles.firstWhere(
-            (v) => v.isAvailable && v.location == request.pickupLocation,
-        orElse: () => throw Exception('No available vehicles at the specified pickup location'),
+            (v) => v.isAvailable,
+        orElse: () => throw Exception('No available vehicles'),
       );
       availableVehicle.isAvailable = false;
+      availableVehicle.location = request.pickupLocation; // Set the location based on user input
       _activeRides.add(request);
       print('Ride confirmed for ${request.user.name} with vehicle ${availableVehicle.id}');
     } catch (e) {
-      throw Exception('No available vehicles at the specified pickup location');
+      throw Exception('No available vehicles');
     }
   }
 
+  // completes a ride and marks the vehicle as available
   void completeRide(String rideId) {
     final ride = _activeRides.firstWhere((r) => r.id == rideId);
     final vehicle = _vehicles.firstWhere((v) => v.id == ride.id);
@@ -81,9 +80,16 @@ class RideService {
     _activeRides.remove(ride);
     print('Ride completed for ride ID $rideId');
   }
+
+  // resets the ride service by clearing active rides and resetting vehicle availability
+  void resetService() {
+    _activeRides.clear();
+    _vehicles.forEach((v) => v.isAvailable = true);
+    print('Ride service has been reset.');
+  }
 }
 
-// Dashboard Screen to Display Data and User Input Form
+// dashboard screen for managing ride requests and displaying vehicle status.
 class DashboardScreen extends StatefulWidget {
   final RideService rideService;
 
@@ -99,8 +105,8 @@ class _DashboardScreenState extends State<DashboardScreen> {
   final TextEditingController _phoneController = TextEditingController();
   final TextEditingController _pickupController = TextEditingController();
   final TextEditingController _dropoffController = TextEditingController();
-  bool _showTables = false;
-  String? _errorMessage;
+  bool _showTables = false; // flag to show/hide tables
+  String? _errorMessage; // error message for ride request failures
 
   @override
   void initState() {
@@ -108,6 +114,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
     print('DashboardScreen initState');
   }
 
+  // submits a ride request and updates the UI
   void _submitRequest() {
     print('Submit request button pressed');
     if (_formKey.currentState!.validate()) {
@@ -126,7 +133,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
       try {
         widget.rideService.requestRide(request);
         setState(() {
-          _showTables = true; // Show the tables after the first ride request
+          _showTables = true; // show the tables after the first ride request
           _errorMessage = null;
         });
         print('Ride request submitted successfully.');
@@ -141,12 +148,27 @@ class _DashboardScreenState extends State<DashboardScreen> {
     }
   }
 
+  // resets the ride service and updates the UI
+  void _resetService() {
+    widget.rideService.resetService();
+    setState(() {
+      _showTables = false;
+      _errorMessage = null;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     print('DashboardScreen build method called');
     return Scaffold(
       appBar: AppBar(
         title: Text('Ride Service Dashboard'),
+        actions: [
+          IconButton(
+            icon: Icon(Icons.refresh),
+            onPressed: _resetService, // Reset button
+          ),
+        ],
       ),
       body: SingleChildScrollView(
         child: Padding(
@@ -231,11 +253,13 @@ class _DashboardScreenState extends State<DashboardScreen> {
     );
   }
 
+  // builds the table to display active ride requests
   Widget rideRequestsTable() {
     print('Building ride requests table');
     return DataTable(
       columns: const [
-        DataColumn(label: Text('ID')),
+        DataColumn(label: Text('Request ID')),
+        DataColumn(label: Text('User ID')),
         DataColumn(label: Text('User')),
         DataColumn(label: Text('Pickup')),
         DataColumn(label: Text('Dropoff')),
@@ -243,16 +267,18 @@ class _DashboardScreenState extends State<DashboardScreen> {
       ],
       rows: widget.rideService.getActiveRides().map((ride) {
         return DataRow(cells: [
-          DataCell(Text(ride.id)),
-          DataCell(Text(ride.user.name)),
-          DataCell(Text(ride.pickupLocation)),
-          DataCell(Text(ride.dropoffLocation)),
-          DataCell(Text(ride.requestTime.toString())),
+          DataCell(Text(ride.id)), // Request ID
+          DataCell(Text(ride.user.id)), // User ID
+          DataCell(Text(ride.user.name)), // User name
+          DataCell(Text(ride.pickupLocation)), // Pickup location
+          DataCell(Text(ride.dropoffLocation)), // Dropoff location
+          DataCell(Text(ride.requestTime.toString())), // Request time
         ]);
       }).toList(),
     );
   }
 
+  // builds the table to display vehicle status.
   Widget vehiclesTable() {
     print('Building vehicles table');
     return DataTable(
@@ -281,6 +307,7 @@ void main() {
   runApp(MyApp(rideService: rideService));
 }
 
+// root widget of the App.
 class MyApp extends StatelessWidget {
   final RideService rideService;
 
