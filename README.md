@@ -1,6 +1,6 @@
 # Request Processing System 
 
-This project is a flutter app that can be used for managing a ride service app
+This project is a request processing system that can be used for managing a ride service app
 
 ## Features
 
