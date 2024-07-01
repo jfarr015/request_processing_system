@@ -1,6 +1,6 @@
-# Autonomous Ride Service
+# Request Processing System 
 
-This project is a Flutter application for managing an autonomous ride service.
+This project is a flutter app that can be used for managing a ride service app
 
 ## Features
 
@@ -20,7 +20,7 @@ To get started with this project, follow these steps:
 
 ### Installation
 
-1. Clone the repository:
+ Clone the repository:
    ```sh
    git clone https://github.com/jfarr015/request_processing_system.git
    cd request_processing_system_final
