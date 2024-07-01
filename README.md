@@ -1,20 +1,26 @@
-<<<<<<< HEAD
-# request_processing_system_final
+# Autonomous Ride Service
 
-A new Flutter project.
+This project is a Flutter application for managing an autonomous ride service.
+
+## Features
+
+- Request a ride
+- View active ride requests
+- View vehicle status
+- Reset the ride service
 
 ## Getting Started
 
-This project is a starting point for a Flutter application.
+To get started with this project, follow these steps:
 
-A few resources to get you started if this is your first Flutter project:
+### Prerequisites
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+- Flutter SDK
+- Android Studio or Visual Studio Code
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
-=======
+### Installation
 
->>>>>>> origin/main
+1. Clone the repository:
+   ```sh
+   git clone https://github.com/jfarr015/request_processing_system.git
+   cd request_processing_system_final
