@@ -89,6 +89,7 @@ BEGIN
     BEGIN
         BLOCK "040904e4"
         BEGIN
+<<<<<<< HEAD
             VALUE "CompanyName", "com.example" "\0"
             VALUE "FileDescription", "request_processing_system_final" "\0"
             VALUE "FileVersion", VERSION_AS_STRING "\0"
@@ -96,6 +97,15 @@ BEGIN
             VALUE "LegalCopyright", "Copyright (C) 2024 com.example. All rights reserved." "\0"
             VALUE "OriginalFilename", "request_processing_system_final.exe" "\0"
             VALUE "ProductName", "request_processing_system_final" "\0"
+=======
+            VALUE "CompanyName", "ENDEAVR.com" "\0"
+            VALUE "FileDescription", "request_processing_system" "\0"
+            VALUE "FileVersion", VERSION_AS_STRING "\0"
+            VALUE "InternalName", "request_processing_system" "\0"
+            VALUE "LegalCopyright", "Copyright (C) 2024 ENDEAVR.com. All rights reserved." "\0"
+            VALUE "OriginalFilename", "request_processing_system.exe" "\0"
+            VALUE "ProductName", "request_processing_system" "\0"
+>>>>>>> origin/main
             VALUE "ProductVersion", VERSION_AS_STRING "\0"
         END
     END

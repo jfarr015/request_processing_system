@@ -1,10 +1,18 @@
 # Project-level configuration.
 cmake_minimum_required(VERSION 3.14)
+<<<<<<< HEAD
 project(request_processing_system_final LANGUAGES CXX)
 
 # The name of the executable created for the application. Change this to change
 # the on-disk name of your application.
 set(BINARY_NAME "request_processing_system_final")
+=======
+project(request_processing_system LANGUAGES CXX)
+
+# The name of the executable created for the application. Change this to change
+# the on-disk name of your application.
+set(BINARY_NAME "request_processing_system")
+>>>>>>> origin/main
 
 # Explicitly opt in to modern CMake behaviors to avoid warnings with recent
 # versions of CMake.

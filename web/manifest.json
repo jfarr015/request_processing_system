@@ -1,6 +1,11 @@
 {
+<<<<<<< HEAD
     "name": "request_processing_system_final",
     "short_name": "request_processing_system_final",
+=======
+    "name": "request_processing_system",
+    "short_name": "request_processing_system",
+>>>>>>> origin/main
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",

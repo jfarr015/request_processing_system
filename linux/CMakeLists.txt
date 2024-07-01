@@ -4,10 +4,17 @@ project(runner LANGUAGES CXX)
 
 # The name of the executable created for the application. Change this to change
 # the on-disk name of your application.
+<<<<<<< HEAD
 set(BINARY_NAME "request_processing_system_final")
 # The unique GTK application identifier for this application. See:
 # https://wiki.gnome.org/HowDoI/ChooseApplicationID
 set(APPLICATION_ID "com.example.request_processing_system_final")
+=======
+set(BINARY_NAME "request_processing_system")
+# The unique GTK application identifier for this application. See:
+# https://wiki.gnome.org/HowDoI/ChooseApplicationID
+set(APPLICATION_ID "ENDEAVR.com.request_processing_system")
+>>>>>>> origin/main
 
 # Explicitly opt in to modern CMake behaviors to avoid warnings with recent
 # versions of CMake.
